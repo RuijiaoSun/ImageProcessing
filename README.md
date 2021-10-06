@@ -1,4 +1,4 @@
-# README
+# Part of the progress
 
 ### The ImageProcessing.py  can be used to extract focused region from light-sheet fluorescence microscopy(LSFM) images, remove background for OCT images, and register the high-resolution LSFM images with the wide-field OCT images.
 

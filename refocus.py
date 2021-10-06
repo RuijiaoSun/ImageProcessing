@@ -17,6 +17,13 @@ def var_f(img, win):
     var = mean_sqr - mean**2
     return var
 
+def var_map(img, win):
+    mean = ndimage.uniform_filter(np.float32(img), win) # mean
+    sqr_mean = ndimage.uniform_filter(np.float32(img)**2, win)
+    var = sqr_mean - mean**2
+    var /= mean # normalization.
+    return var
+
 # Read images.
 root_dir = '/home/ruijiao/A_research/registration/embryo_DAPI/MK_3D/MPE_Refreshed'
 new_dir = '/home/ruijiao/A_research/registration/embryo_DAPI/MK_3D/MPE_Refocused_2'

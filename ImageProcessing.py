@@ -18,6 +18,14 @@ import ants
 import time
 from libtiff import TIFF
 import numpy as np
+from scipy import ndimage
+
+def var_map(img, win):
+    mean = ndimage.uniform_filter(np.float32(img), win) # mean
+    sqr_mean = ndimage.uniform_filter(np.float32(img)**2, win)
+    var = sqr_mean - mean**2
+    var /= mean # normalization.
+    return var
 
 # ImageProcessing.py '/home/ruijiao/A_research/registration/embryo_DAPI/MK_3D/OCT' '/home/ruijiao/A_research/registration/embryo_DAPI/MK_3D/MPE' '/home/ruijiao/A_research/registration/embryo_DAPI/Merged_threshold5'
 def usage():
@@ -116,10 +124,10 @@ def merge(Registered, OCT_Raw, Merged):
         reg = cv2.imread(reg_path, 2)
         oct = cv2.imread(oct_path, 1)
 
-        # var = var_f(reg, 5)
+        # var = var_map(reg, 3)
 
         # Pick those dots that fit well.
-        # reg[var < 5*np.mean(var] = 0
+        # reg[var < 1] = 0
         kernel_e = np.ones((3, 3), np.uint8)
         reg = cv2.erode(reg, kernel_e, iterations=1)
         oct[oct<170] = 0
